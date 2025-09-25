@@ -1,37 +1,21 @@
 import { Box } from "@chakra-ui/react";
-import Machine from "../equipment/Machine";
+import { Machine } from "../types/Machine";
+import MachineContainer from "../equipment/MachineContainer";
 
 interface ListOfMachinesProps {
-  activeMachine: string | null;
+  machines?: Machine[];
   onButtonClick: (machineName: string, buttonColor: string) => void;
 }
 
 const ListOfMachines: React.FC<ListOfMachinesProps> = ({
-  activeMachine,
+  machines,
   onButtonClick,
 }) => {
   return (
     <Box>
-      <Machine
-        name={"Machine 1"}
-        activeMachine={activeMachine}
-        onButtonClick={onButtonClick}
-      />
-      <Machine
-        name={"Machine 2"}
-        activeMachine={activeMachine}
-        onButtonClick={onButtonClick}
-      />
-      <Machine
-        name={"Machine 3"}
-        activeMachine={activeMachine}
-        onButtonClick={onButtonClick}
-      />
-      <Machine
-        name={"Machine 4"}
-        activeMachine={activeMachine}
-        onButtonClick={onButtonClick}
-      />
+      {machines?.map((machine) => (
+        <MachineContainer machine={machine} onButtonClick={onButtonClick} />
+      ))}
     </Box>
   );
 };
