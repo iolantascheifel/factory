@@ -1,22 +1,55 @@
-using Microsoft.AspNetCore.Mvc;  
-using FactoryApi.Models;  
-using FactoryApi.Services;   
-namespace FactoryApi.Controllers  
-{  
-    [ApiController]  
-    [Route("api/[controller]")]  
-    public class MachinesController : ControllerBase  
-    {  
-        private readonly CosmosDbService _cosmosDbService;  
-        public MachinesController(CosmosDbService cosmosDbService)  
-        {            _cosmosDbService = cosmosDbService;  
-        }                [HttpPost]  
-        public async Task<IActionResult> UpdateMachineState([FromBody] MachineStateRequest request)  
-        {            if (string.IsNullOrEmpty(request.Machine) || string.IsNullOrEmpty(request.State))  
-            {                return BadRequest("Machine name and state are required.");  
-            }            await _cosmosDbService.AddItemAsync(request);  
-  
-            Console.WriteLine($"Received update for {request.Machine}: {request.State}");  
-  
-            return Ok(new { message = $"State for {request.Machine} updated to {request.State}." });  
-        }    }}
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FactoryApi.Dtos;
+using FactoryApi.Models;
+using FactoryApi.Services;
+using Microsoft.AspNetCore.Mvc;
+
+[ApiController]
+[Route("api/machines")]
+public class MachineController : ControllerBase
+{
+    private readonly IMachineService _machineService;
+    
+    public MachineController(IMachineService machineService)
+    {
+        _machineService = machineService;
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Machine>>> Get()
+    {
+        var machines = await _machineService.GetAllMachinesAsync();
+        return Ok(machines);
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Machine>> GetById(Guid id)
+    {
+        var machine = await _machineService.GetMachineByIdAsync(id);
+        if (machine == null)
+        {
+            return NotFound();
+        }
+        return Ok(machine);
+    }
+    
+    [HttpGet("{id}/history")]
+    public async Task<ActionResult<IEnumerable<MachineState>>> GetHistory(Guid id)
+    {
+        var history = await _machineService.GetMachineHistoryAsync(id);
+        return Ok(history);
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateMachineState(Guid id, [FromBody] MachineUpdateDto updateDto)
+    {
+        var success = await _machineService.UpdateMachineStateAsync(id, updateDto.NewState, updateDto.NewOrder);
+        if (!success)
+        {
+            return NotFound();
+        }
+        return NoContent(); 
+    }
+}

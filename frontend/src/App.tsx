@@ -4,22 +4,12 @@ import "./App.css";
 import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import WorkerView from "./worker/WorkerView";
 import SupervisorView from "./supervisor/SupervisorView";
-import { useMachineState } from "./hooks/useMachineState";
+import { useGetAllMachines } from "./hooks/useGetAllMachines";
 
 function App() {
   const [role, setRole] = useState<"worker" | "supervisor">("worker");
-  const { machineStates, sendApiRequest } = useMachineState();
-  const [activeMachine, setActiveMachine] = useState<string | null>(null);
 
-  const handleMachineButtonClick = (
-    machineName: string,
-    buttonColor: string,
-  ) => {
-    setActiveMachine(machineName);
-    sendApiRequest(machineName, buttonColor).finally(() => {
-      setActiveMachine(null);
-    });
-  };
+  const { machines } = useGetAllMachines();
 
   return (
     <Box p={8}>
@@ -29,13 +19,9 @@ function App() {
         <Button onClick={() => setRole("supervisor")}>Supervisor Mode</Button>
       </ButtonGroup>
       {role === "worker" ? (
-        <WorkerView
-          activeMachine={activeMachine}
-          onButtonClick={handleMachineButtonClick}
-          machineStates={machineStates}
-        />
+        <WorkerView onButtonClick={() => {}} machines={machines} />
       ) : (
-        <SupervisorView machineStates={machineStates} />
+        <SupervisorView machines={machines} />
       )}
     </Box>
   );
