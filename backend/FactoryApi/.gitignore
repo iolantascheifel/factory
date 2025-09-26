@@ -1,3 +1,21 @@
 # Exclude sensitive configuration files
 appsettings.json
 appsettings.Development.json
+
+# Folders should not be committed to Git
+bin/
+obj/
+
+# NuGet package manager
+.vs/
+.idea/
+.suo
+*.user
+*.pdb
+*.zip
+.nupkg
+
+# IDEs
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+.vs/
