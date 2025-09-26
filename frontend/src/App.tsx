@@ -4,12 +4,12 @@ import "./App.css";
 import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import WorkerView from "./worker/WorkerView";
 import SupervisorView from "./supervisor/SupervisorView";
-import { useGetAllMachines } from "./hooks/useGetAllMachines";
+import { useFetchMachines } from "./hooks/useFetchMachines";
 
 function App() {
   const [role, setRole] = useState<"worker" | "supervisor">("worker");
 
-  const { machines } = useGetAllMachines();
+  const { machines } = useFetchMachines();
 
   return (
     <Box p={8}>
@@ -19,7 +19,7 @@ function App() {
         <Button onClick={() => setRole("supervisor")}>Supervisor Mode</Button>
       </ButtonGroup>
       {role === "worker" ? (
-        <WorkerView onButtonClick={() => {}} machines={machines} />
+        <WorkerView machines={machines} />
       ) : (
         <SupervisorView machines={machines} />
       )}

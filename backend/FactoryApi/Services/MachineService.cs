@@ -52,6 +52,7 @@ public class MachineService : IMachineService
             machine.Order = newOrder;
         }
 
+        await _db.SaveChangesAsync();
         return true;
     }
     

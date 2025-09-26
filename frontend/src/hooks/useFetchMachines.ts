@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 const API_BASE_URL = "http://localhost:5206/api/machines";
 
-export const useGetAllMachines = () => {
+export const useFetchMachines = () => {
   const [machines, setMachines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
