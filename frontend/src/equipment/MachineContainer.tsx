@@ -13,37 +13,39 @@ const MachineContainer: React.FC<MachineProps> = ({
 }) => {
   return (
     <Box
-      bg="blue.800"
+      bg="blue.600"
       p={4}
-      my={2}
-      boxShadow="md"
-      borderRadius="md"
+      my={4}
+      boxShadow="xl"
+      borderRadius="lg"
       color="white"
     >
       <Flex align="center">
-        <Text fontSize="lg" fontWeight="bold">
-          {machine.name}
-        </Text>
+        <Text fontSize="md">{machine.name}</Text>
         <Spacer />
-        <ButtonGroup>
+        <ButtonGroup gap={2}>
           <Button
-            size="lg"
+            size="md"
+            border={"0.3 solid"}
+            borderColor={"white"}
             bg="red"
             variant="solid"
-            mr={4}
             onClick={() => onButtonClick(machine.id, "red")}
           />
           <Button
-            size="lg"
+            size="md"
             bg="yellow"
             variant="solid"
-            mr={4}
+            border={"0.3 solid"}
+            borderColor={"white"}
             onClick={() => onButtonClick(machine.id, "yellow")}
           />
           <Button
-            size="lg"
+            size="md"
             bg="green"
             variant="solid"
+            border={"0.3 solid"}
+            borderColor={"white"}
             onClick={() => onButtonClick(machine.id, "green")}
           />
         </ButtonGroup>
