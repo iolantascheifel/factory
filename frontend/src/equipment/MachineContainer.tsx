@@ -4,7 +4,7 @@ import { Machine } from "../types/Machine";
 
 interface MachineProps {
   machine: Machine;
-  onButtonClick: (machineName: string, buttonColor: string) => void;
+  onButtonClick: (id: string, buttonColor: string) => void;
 }
 
 const MachineContainer: React.FC<MachineProps> = ({
@@ -31,20 +31,20 @@ const MachineContainer: React.FC<MachineProps> = ({
             bg="red"
             variant="solid"
             mr={4}
-            onClick={() => onButtonClick(machine.name, "red")}
+            onClick={() => onButtonClick(machine.id, "red")}
           />
           <Button
             size="lg"
             bg="yellow"
             variant="solid"
             mr={4}
-            onClick={() => onButtonClick(machine.name, "yellow")}
+            onClick={() => onButtonClick(machine.id, "yellow")}
           />
           <Button
             size="lg"
             bg="green"
             variant="solid"
-            onClick={() => onButtonClick(machine.name, "green")}
+            onClick={() => onButtonClick(machine.id, "green")}
           />
         </ButtonGroup>
       </Flex>

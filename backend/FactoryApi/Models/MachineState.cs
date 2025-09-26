@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace FactoryApi.Models;
 
 public class MachineState
@@ -6,5 +8,6 @@ public class MachineState
     public DateTimeOffset Timestamp { get; set; }
     public string State { get; set; }
     public Guid MachineId { get; set; }
+    [JsonIgnore]
     public Machine Machine { get; set; }
 }

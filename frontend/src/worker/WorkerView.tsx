@@ -2,14 +2,20 @@ import React from "react";
 import { Box, Button, ButtonGroup, Text, Tabs } from "@chakra-ui/react";
 import ListOfMachines from "../equipment/ListOfMachines";
 import SupervisorView from "../supervisor/SupervisorView";
-import { Machine } from "@/types/Machine";
+import { Machine } from "../types/Machine";
+import { useMachineState } from "../hooks/useMachineState";
 
 export interface WorkerViewProps {
-  onButtonClick: (machineName: string, buttonColor: string) => void;
   machines: Machine[];
 }
 
-const WorkerView: React.FC<WorkerViewProps> = ({ machines, onButtonClick }) => {
+const WorkerView: React.FC<WorkerViewProps> = ({ machines }) => {
+  const { sendApiRequest } = useMachineState();
+
+  const onButtonClick = (machineId: string, buttonColor: string) => {
+    sendApiRequest(machineId, buttonColor);
+  };
+
   return (
     <Box p={8}>
       <Text>States of production</Text>
@@ -30,10 +36,7 @@ const WorkerView: React.FC<WorkerViewProps> = ({ machines, onButtonClick }) => {
           <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content p={0} value="control">
-          <ListOfMachines
-            machines={machines || []}
-            onButtonClick={onButtonClick}
-          />
+          <ListOfMachines machines={machines} onButtonClick={onButtonClick} />
         </Tabs.Content>
         <Tabs.Content p={0} value="overview">
           <SupervisorView machines={machines} />
