@@ -5,6 +5,7 @@ using FactoryApi.Dtos;
 using FactoryApi.Models;
 using FactoryApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization; 
 
 [ApiController]
 [Route("api/machines")]

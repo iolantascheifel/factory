@@ -1,7 +1,9 @@
 using FactoryApi.Database;
 using FactoryApi.Models;
-using FactoryApi.Services;  
+using FactoryApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);  
@@ -18,6 +20,20 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
+});
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        // require the "scp" claim to contain your scope name
+        policy.RequireClaim("scp", "access_as_user");
+    });
 });
 
 builder.Services.AddEndpointsApiExplorer();  
