@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Button, ButtonGroup, Text, Tabs } from "@chakra-ui/react";
+import { Box, Tabs } from "@chakra-ui/react";
 import ListOfMachines from "../equipment/ListOfMachines";
-import SupervisorView from "../supervisor/SupervisorView";
 import { Machine } from "../types/Machine";
 import { useMachineState } from "../hooks/useMachineState";
+import StatesOfProduction from "../components/StatesOfProduction";
+import OverviewList from "../components/OverviewList";
 
 export interface WorkerViewProps {
   machines: Machine[];
@@ -18,18 +19,7 @@ const WorkerView: React.FC<WorkerViewProps> = ({ machines }) => {
 
   return (
     <Box p={8}>
-      <Text>States of production</Text>
-      <ButtonGroup m={8}>
-        <Button bg="red" variant="solid">
-          Standing still
-        </Button>
-        <Button bg="yellow" variant="solid">
-          Starting up / Winding down
-        </Button>
-        <Button bg="green" variant="solid">
-          Producing normally
-        </Button>
-      </ButtonGroup>
+      <StatesOfProduction />
       <Tabs.Root variant="enclosed" colorScheme="blue">
         <Tabs.List>
           <Tabs.Trigger value="control">Control View</Tabs.Trigger>
@@ -39,7 +29,7 @@ const WorkerView: React.FC<WorkerViewProps> = ({ machines }) => {
           <ListOfMachines machines={machines} onButtonClick={onButtonClick} />
         </Tabs.Content>
         <Tabs.Content p={0} value="overview">
-          <SupervisorView machines={machines} />
+          <OverviewList machines={machines} workerMode={true} />
         </Tabs.Content>
       </Tabs.Root>
     </Box>
