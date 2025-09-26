@@ -4,7 +4,6 @@ import { useFetchMachines } from "./useFetchMachines";
 export const useMachineState = () => {
   const { machines, loading, error, fetchMachines } = useFetchMachines();
   const { updateMachine, isUpdating, updateError } = useUpdateMachine();
-  // const { history, isFetchingHistory, historyError, fetchHistory } = useFetchHistory();
 
   const mapColorToState = (color: string) => {
     switch (color) {
@@ -24,12 +23,11 @@ export const useMachineState = () => {
 
     const updateDto = {
       newState: newState,
-      newOrder: "PO-12345", // You can customize this
+      newOrder: "PO-12345",
     };
 
     try {
       await updateMachine(machineId, updateDto);
-      // If the update was successful, refetch the data to update the UI
       if (!isUpdating && !updateError) {
         fetchMachines();
       }
@@ -45,9 +43,5 @@ export const useMachineState = () => {
     sendApiRequest,
     isUpdating,
     updateError,
-    // history,
-    // isFetchingHistory,
-    // historyError,
-    // fetchMachineHistory: fetchHistory,
   };
 };
