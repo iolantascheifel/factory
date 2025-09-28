@@ -6,9 +6,10 @@ import SupervisorView from "./supervisor/SupervisorView";
 import { useFetchMachines } from "./hooks/useFetchMachines";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider, useIsAuthenticated, useMsal } from "@azure/msal-react";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { msalConfig } from "./azure-ad-config";
 
+const queryClient = new QueryClient();
 const msalInstance = new PublicClientApplication(msalConfig);
 
 // The main component that manages the login state.
@@ -98,7 +99,9 @@ const AppWithAuth = () => {
 const App: React.FC = () => {
   return (
     <MsalProvider instance={msalInstance}>
-      <AppWithAuth />
+      <QueryClientProvider client={queryClient}>
+        <AppWithAuth />
+      </QueryClientProvider>
     </MsalProvider>
   );
 };
