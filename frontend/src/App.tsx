@@ -12,7 +12,6 @@ import { msalConfig } from "./azure-ad-config";
 const queryClient = new QueryClient();
 const msalInstance = new PublicClientApplication(msalConfig);
 
-// The main component that manages the login state.
 const AppWithAuth = () => {
   const { instance } = useMsal();
   const isAuthenticated = useIsAuthenticated();
@@ -28,15 +27,15 @@ const AppWithAuth = () => {
       const account = instance.getActiveAccount();
       const email = account?.username?.toLowerCase();
       if (email === "iolanta.scheifel@gmail.com") {
-        setUserRole("supervisor");
-      } else {
         setUserRole("worker");
+      } else {
+        setUserRole("supervisor");
       }
     }
   }, [isAuthenticated, instance]);
 
   const handleLogin = () => {
-    instance.loginRedirect(); // Redirect to the Azure login page
+    instance.loginRedirect();
   };
 
   const handleLogout = () => {

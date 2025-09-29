@@ -5,9 +5,6 @@ namespace FactoryApi.Dtos;
 // which is a good security practice.
 public class MachineUpdateDto
 {
-    // The new state to which the machine should be transitioned
     public string NewState { get; set; }
-    
-    // The optional new production order
     public string NewOrder { get; set; }
 }
