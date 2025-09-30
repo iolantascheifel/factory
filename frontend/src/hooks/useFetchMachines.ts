@@ -52,7 +52,6 @@ export const useFetchMachines = () => {
 
     // Continue with the fetch only if a token was successfully acquired (either silently or after redirect)
     try {
-      // Include the access token in the Authorization header
       const response = await fetch(protectedApi.endpoint, {
         headers: {
           Authorization: `Bearer ${accessTokenResponse.accessToken}`,
@@ -71,13 +70,13 @@ export const useFetchMachines = () => {
     } finally {
       setLoading(false);
     }
-  }, [instance, account]); // Dependencies for useCallback
+  }, [instance, account]);
 
   useEffect(() => {
     if (account) {
       fetchMachines();
     }
-  }, [fetchMachines, account]); // Dependencies for useEffect
+  }, [fetchMachines, account]);
 
   return { machines, loading, error, fetchMachines };
 };

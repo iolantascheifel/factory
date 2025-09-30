@@ -79,14 +79,14 @@ using (var scope = app.Services.CreateScope())
     {
         context.Machines.Add(new Machine
         {
-            Id = Guid.NewGuid(),
+            Id = 1,
             Name = "CNC Machine 1",
             State = "Ready",
             Order = "N/A"
         });
         context.Machines.Add(new Machine
         {
-            Id = Guid.NewGuid(),
+            Id = 2,
             Name = "3D Printer 2",
             State = "Operational",
             Order = "N/A"

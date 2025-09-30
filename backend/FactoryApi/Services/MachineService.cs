@@ -24,14 +24,14 @@ public class MachineService : IMachineService
             .ToListAsync();
     }
     
-    public async Task<Machine?> GetMachineByIdAsync(Guid id)
+    public async Task<Machine?> GetMachineByIdAsync(int id)
     {
         return await _db.Machines
             .Include((m) => m.StateHistory)
             .FirstOrDefaultAsync((m) => m.Id == id);
     }
     
-    public async Task<bool> UpdateMachineStateAsync(Guid id, string newState, string newOrder)
+    public async Task<bool> UpdateMachineStateAsync(int id, string newState, string newOrder)
     {
         var machine = await _db.Machines.FirstOrDefaultAsync(m => m.Id == id);
         if (machine == null)
@@ -56,7 +56,7 @@ public class MachineService : IMachineService
         return true;
     }
     
-    public async Task<IEnumerable<MachineState>> GetMachineHistoryAsync(Guid id)
+    public async Task<IEnumerable<MachineState>> GetMachineHistoryAsync(int id)
     {
         var machine = await _db.Machines
             .Include((m) => m.StateHistory)
@@ -66,6 +66,6 @@ public class MachineService : IMachineService
             return Enumerable.Empty<MachineState>();
         }
         
-        return await Task.FromResult(machine.StateHistory);
+        return machine.StateHistory;
     }
 }

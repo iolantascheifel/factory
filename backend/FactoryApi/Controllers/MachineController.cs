@@ -26,7 +26,7 @@ public class MachineController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<Machine>> GetById(Guid id)
+    public async Task<ActionResult<Machine>> GetById(int id)
     {
         var machine = await _machineService.GetMachineByIdAsync(id);
         if (machine == null)
@@ -37,14 +37,14 @@ public class MachineController : ControllerBase
     }
     
     [HttpGet("{id}/history")]
-    public async Task<ActionResult<IEnumerable<MachineState>>> GetHistory(Guid id)
+    public async Task<ActionResult<IEnumerable<MachineState>>> GetHistory(int id)
     {
         var history = await _machineService.GetMachineHistoryAsync(id);
         return Ok(history);
     }
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateMachineState(Guid id, [FromBody] MachineUpdateDto updateDto)
+    public async Task<IActionResult> UpdateMachineState(int id, [FromBody] MachineUpdateDto updateDto)
     {
         var success = await _machineService.UpdateMachineStateAsync(id, updateDto.NewState, updateDto.NewOrder);
         if (!success)

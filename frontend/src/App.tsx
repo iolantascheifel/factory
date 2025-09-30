@@ -27,9 +27,9 @@ const AppWithAuth = () => {
       const account = instance.getActiveAccount();
       const email = account?.username?.toLowerCase();
       if (email === "iolanta.scheifel@gmail.com") {
-        setUserRole("worker");
-      } else {
         setUserRole("supervisor");
+      } else {
+        setUserRole("worker");
       }
     }
   }, [isAuthenticated, instance]);

@@ -8,9 +8,9 @@ namespace FactoryApi.Services
     public interface IMachineService
     {
         Task<IEnumerable<Machine>> GetAllMachinesAsync();
-        Task<Machine?> GetMachineByIdAsync(Guid id);
-        Task<bool> UpdateMachineStateAsync(Guid id, string newState, string newOrder);
-        Task<IEnumerable<MachineState>> GetMachineHistoryAsync(Guid id);
+        Task<Machine?> GetMachineByIdAsync(int id);
+        Task<bool> UpdateMachineStateAsync(int id, string newState, string newOrder);
+        Task<IEnumerable<MachineState>> GetMachineHistoryAsync(int id);
     }
 }
 
